@@ -10,7 +10,6 @@ style: home
 {{ project-description }}
 
 {{ logo }}
-{:.publisher-logo}
 
 {% for book in site.data.meta.works %}
 *[{{ book.title }}]({{ book.directory }}/text/{{ book.products.web.start-page }}.html)*
