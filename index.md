@@ -5,11 +5,7 @@ style: home
 
 {% include metadata %}
 
-# {{ project-name }}
-
-{{ project-description }}
-
-{{ logo }}
+# You're here! Now read this...
 
 {% for book in site.data.meta.works %}
 *[{{ book.title }}]({{ book.directory }}/text/{{ book.products.web.start-page }}.html)*

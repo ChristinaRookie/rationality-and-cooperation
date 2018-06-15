@@ -13,7 +13,7 @@ project:
   # The name of the project of books in this folder.
   name: "Philosophical, Political, and Economic thought"
   # A one-liner about this project. Useful for Open Graph metadata.
-  description: "Books created by Christina Tromp, using Arthur Attwell's Electric Book workflow"
+  description: "Created by Christina Tromp, using Arthur Attwell's Electric Book workflow"
   # The logo of the organisation, saved web-ready in /assets
   logo: "ac-logo.jpg"
   # An image in /assets that stands for the project
