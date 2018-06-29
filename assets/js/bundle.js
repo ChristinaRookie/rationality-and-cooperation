@@ -14,6 +14,7 @@ layout: null
     {% include_relative mark-search-terms.js %}
     {% include_relative videos.js %}
     {% include_relative mcqs.js %}
+    {% include_relative definitions.js %}
 
 {% endif %}
 
