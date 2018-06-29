@@ -461,6 +461,8 @@ $outside-margin: ($break-point-width - $max-width-default) / 2 - $line-height-de
 }
 
 
-
+.empty-cell {
+    border: none
+}
 
 
