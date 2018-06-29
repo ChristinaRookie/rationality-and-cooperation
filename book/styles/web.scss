@@ -70,8 +70,8 @@ $color-highlight: #ffd54d;
 
 // Some features rearrange at certain screen sizes.
 // What are your break points for rearrangement?
-$break-point-height: 600px;
-$break-point-width: 600px;
+$break-point-height: 60em;
+$break-point-width: 60em;
 
 // Set the default start-depth of pages.
 // This is the distance from the top of the page to the first element on the first page.
@@ -211,4 +211,256 @@ $web-reset-sequences: true; // This should stay last in the @import list
 // -------------
 
 // Add any custom Sass or CSS here.
+
+// mixin for "outside margins" on very large screens
+
+$outside-width: ($break-point-width - $max-width-default) / 2 - $line-height-default * 6;
+$outside-margin: ($break-point-width - $max-width-default) / 2 - $line-height-default * 4;
+
+@mixin outside-right() {
+	@media (min-width: $break-point-width) {
+		float: right;
+		clear: right;
+		margin-top: 0;
+		margin-right: -$outside-margin;
+		margin-bottom: $line-height-default;
+		margin-left: 0;
+		max-width: $outside-width;
+		&.web-wide {
+			max-width: $outside-width * 2;
+			margin-right: -($outside-width - 1em);
+			margin-left: 1em;
+		}
+		&.web-full-width {
+			float: none;
+			max-width: 100%;
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+}
+
+@mixin outside-left() {
+	@media (min-width: $break-point-width) {
+		float: left;
+		clear: left;
+		margin-top: 0;
+		margin-right: 0;
+		margin-bottom: $line-height-default;
+		margin-left: -$outside-margin;
+		max-width: $outside-width;
+		&.web-wide {
+			max-width: $outside-width * 2;
+			margin-left: -($outside-margin - 1em);
+			margin-right: 1em;
+		}
+		&.web-full-width {
+			float: none;
+			max-width: 100%;
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+}
+
+// definition lists
+
+.definition {
+    padding: ($line-height-default / 2);
+    background: $color-accent;
+    color: white;
+    border-bottom-right-radius: $button-border-radius;
+    font-family: $font-text-secondary;
+    font-size: $font-size-default * $font-size-smaller;
+    line-height: ($line-height-default * $font-size-smaller) * 1.4; // 1.4 retains good proportion of font height to line height
+    // on larger screens, text wraps around definitions
+    @media (min-width: $break-point-width) {
+        float: right;
+        clear: right;
+        position: relative;
+        min-width: 5em;
+        max-width: 40%;
+        margin: 0 0 ($line-height-default / 2) 2em;
+    }
+    // on very large screens, place definitions in the margin
+    @include outside-right();
+}
+
+.js-definitions {
+    .definition {
+        background-color: $color-background;
+        color: $color-accent;
+        border: 0.2em solid $color-accent;
+    }
+}
+
+[data-term] {
+    color: $color-links;
+    cursor: pointer;
+}
+
+.definition-term {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 0.25em;
+}
+
+.definition-description {
+    display: inline;
+    margin-bottom: 0;
+    // Create a line break after each definition in a multiple-definitions box
+    &:after {
+        content: "";
+        display: block;
+    }
+    &.no-definition {
+        background: $color-highlight;
+    }
+}
+
+.definition-example {
+    // Put a line break before the example
+    &:before {
+        content: "";
+        display: block;
+        margin-top: 0.5em;
+    }
+}
+
+.definitions {
+    display: none;
+}
+
+.definition-description-hover {
+    // pull definition-description-hover out of the doc flow so they hover above text
+    z-index: 1;
+    position: absolute;
+    // look and feel
+    margin-top: $line-height-default;
+    max-width: $max-width-default * 0.8;
+    margin-left: auto;
+    margin-right: auto;
+    left: $max-width-default * 0.25 / 3;
+    right: $max-width-default * 0.25 / 3;
+    background-color: $color-background;
+    font-family: $font-text-secondary;
+    font-size: $font-size-default * $font-size-smaller;
+    font-weight: normal;
+    color: $color-text-main;
+    border: 0.2em solid $color-accent;
+    border-bottom-right-radius: $button-border-radius / 2;
+    padding: ($line-height-default / 2);
+    box-shadow: 1px 2px 7px grey;
+    // when these are attached to an italic term,
+    // they must not inherit that font style
+    font-style: initial;
+    p {
+        margin-bottom: 0;
+    }
+    // Make wider when in a sidenote
+    .sidenote & {
+        left: 0;
+        right: 0;
+    }
+}
+
+.definition-hover-term {
+    font-weight: bold;
+}
+
+// This mixin used for close button here
+// and on footnotes close button below
+@mixin number-marker() {
+    vertical-align: inherit;
+    display: inline-block;
+    min-width: 1em;
+    background: $color-accent;
+    border-radius: 1em;
+    padding: 0 0.1em 0.1em 0.1em;
+    text-align: center;
+    font-weight: bold;
+    font-family: $font-text-secondary;
+}
+
+.definition-description-hover {
+    .close {
+        position: absolute;
+        right: -($line-height-default / 2);
+        top: -($line-height-default / 2);
+        line-height: 1;
+        @include number-marker();
+        padding: 0.15em 0.1em 0em 0.1em; // override number-marker padding
+        color: white;
+        border: 0;
+        font-size: 1em;
+        // vertical-align: inherit;
+        // display: inline-block;
+        // min-width: 1em;
+        // background: $color-accent;
+        // border-radius: 1em;
+        // padding: 0.1em;
+        // text-align: center;
+        // font-weight: bold;
+        // font-family: $font-text-secondary;
+        // border: 0;
+        // cursor: pointer;
+        &:before {
+            content: $nav-bar-close;
+            display: inline-block;
+            width: 1em;
+            position: relative;
+            top: -0.1em;
+        }
+    }
+}
+
+.hidden-definition-list {
+    display: none;
+}
+
+
+// Target a class with a dot, an element with its name, and a span (with a data-term) like:
+
+// The square brackets select an attribute
+
+
+[data-definition] {
+	color: $color-links;
+}
+
+// CSS imagining there was an element in the DOM immediately after the data-term element. 
+// The ':after' pseudo element adds an element after the data-term
+
+[data-definition]:after {
+	content: attr(data-definition);
+	display: block;
+	position: absolute;
+	background-color: #ffffff;
+	border: solid;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+    max-width: $max-width-default * 0.6;
+    margin-left: auto;
+    margin-right: auto;
+    left: $max-width-default * 0.25 / 3;
+    right: $max-width-default * 0.25 / 3;
+    // this hides the definition box temporarily
+    display: none;
+    font-weight: normal;
+}
+
+// hover is a pseudo class
+[data-definition]:hover {
+	font-weight: bold;
+}
+
+[data-definition]:hover:after {
+	display: block;
+}
+
+
+
+
 
